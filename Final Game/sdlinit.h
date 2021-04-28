@@ -1,7 +1,16 @@
 #include<SDL.h>
+#include<string>
 #pragma once
 
+class windowClass {
+public:
+	bool initialize();//initialization function
+	void closeSDL();//quiting function
+	windowClass(const int WIDTH, const int HEIGHT);
+	//bool loadfiles(std::string image);//The functions which load things seem to be bool as a form of defensive coding
+private:
+	SDL_Window* window = NULL;
 
-bool initialize(SDL_Window* window, const int WIDTH, const int HEIGHT, SDL_Surface* screenSurface);//initialization function
-void closeSDL(SDL_Surface* screenSurface, SDL_Window* window);//quiting function
-bool loadfiles();//The functions which load things seem to be bool as a form of defensive coding
+	//The surface contained by the window
+	SDL_Surface* screenSurface = NULL;
+};
