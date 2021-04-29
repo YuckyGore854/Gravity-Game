@@ -23,7 +23,7 @@ bool windowClass::initialize() {//function starts up SDL, returns true if succes
 		else {
 			//Get window surface if there is no error
 			screenSurface = SDL_GetWindowSurface(window);
-			std::cout << screenSurface << std::endl;
+			
 		}
 
 	}
@@ -44,9 +44,8 @@ void windowClass::closeSDL() {
 	SDL_Quit();
 }
 
-windowClass::windowClass(const int WIDTH, const int HEIGHT) {
+windowClass::windowClass() {}//here just so it works
 
-}
 /*bool loadfiles(std::string file) {//function loads media files, returns true if succesful, returns false if it fails
 
 	bool success = true;//bool tells us if files are able to load
