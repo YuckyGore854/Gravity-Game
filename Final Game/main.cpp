@@ -22,6 +22,7 @@ windowClass window;
 //create a renderer 
 SDL_Renderer* renderer;
 
+const Uint8* state;//variable that holds the current keyboard state
 
 //A surface we will use to hold the image
 SDL_Surface* drawing = NULL;//name can change I assume you need more of these for more images
@@ -30,6 +31,7 @@ SDL_Surface* drawing = NULL;//name can change I assume you need more of these fo
 
 int mousePos[2] = { 0,0 }; // holds mouse position
 enum GAMESTATE { mainMenu, playing, pause }; // gamestate variables as an enum
+enum DIRECTIONS { UP, DOWN, LEFT, RIGHT };
 bool mouseButtons[2] = { false, false };//holds the state of left and right mouse buttons
 
 
@@ -60,18 +62,27 @@ int main(int argc, char* args[]) {
 					}
 					//INPUT SECTION///////
 
-					//if (event.type == SDL_MOUSEMOTION || event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_MOUSEBUTTONUP) { // if there is mouse movement
-					SDL_GetMouseState(&mousePos[0], &mousePos[1]); // update the position of the mouse's x and y
+					if (event.type == SDL_MOUSEMOTION || event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_MOUSEBUTTONUP) { // if there is mouse movement
+						SDL_GetMouseState(&mousePos[0], &mousePos[1]); // update the position of the mouse's x and y
 					
-					if (event.button.button == SDL_BUTTON_LEFT) // if you click the left button
-						mouseButtons[0] = true; // updates mouse button variable
-					else
-						mouseButtons[0] = false;
+						if (event.button.button == SDL_BUTTON_LEFT) // if you click the left button
+							mouseButtons[0] = true; // updates mouse button variable
+						else
+							mouseButtons[0] = false;
 					//cout << mouseButtons[0] <<  endl;
-					//}
+					}
+					if (event.type == SDL_KEYUP || event.type == SDL_KEYDOWN) {
+						if (event.key.keysym.sym == SDLK_w) {
+							cout << "UP" << endl;
+							baton.move();
+						}
+					
+					}
 				}
-				if(baton.isPressed(mousePos[0], mousePos[1], mouseButtons[0]))
-
+				if (baton.isPressed(mousePos[0], mousePos[1], mouseButtons[0])) {
+					cout << "click" << endl;
+					mouseButtons[0] = false;
+				}
 
 
 				if (window.screenSurface != NULL) {//so code don't break

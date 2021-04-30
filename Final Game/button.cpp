@@ -21,6 +21,12 @@ bool button::isPressed(int x, int y, bool lmouseButtonState) {
 	}
 }
 
-void button::draw(SDL_Renderer renderer) {
+void button::draw(SDL_Renderer *renderer) {
 	SDL_RenderFillRect(renderer, &buttonRect);
+}
+
+void button::move() {
+	vY = 2;
+	buttonRect.y += vY;
+
 }
