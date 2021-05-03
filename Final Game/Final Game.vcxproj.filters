@@ -19,6 +19,9 @@
     <Filter Include="Source Files\player">
       <UniqueIdentifier>{af9db771-4291-42f7-bcc3-4c04a11b4f07}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\source files">
+      <UniqueIdentifier>{0f8256c6-f8d4-4791-ab3a-5c5671a4e95e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -53,5 +56,10 @@
     <ClInclude Include="player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\..\Downloads\sprite.png">
+      <Filter>Source Files\source files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

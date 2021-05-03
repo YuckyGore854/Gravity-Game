@@ -4,6 +4,8 @@
 #include <iostream>
 #include "sdlinit.h"
 #include "button.h"
+#include "entity.h"
+
 
 using namespace std;
 
@@ -18,7 +20,7 @@ windowClass window;
 
 //create a renderer 
 SDL_Renderer* renderer;
-
+SDL_PixelFormat* format;
 
 
 //A surface we will use to hold the image
@@ -43,9 +45,13 @@ void input();//declares an input function
 bool quit = false;//Main loop variable
 
 int main(int argc, char* args[]) {
-	int currGameState = mainMenu;
-
-	
+	int currGameState = mainMenu;//sets gamestate to main menu
+	SDL_Rect menuRect;
+	menuRect.x = 200;
+	menuRect.y = 200;
+	menuRect.w = 40;
+	menuRect.h = 20;
+	format = SDL_GetWindowPixelFormat(window.window);
 
 	button baton(200, 200, 40, 20);
 	//Initialize SDL
@@ -71,11 +77,7 @@ int main(int argc, char* args[]) {
 					
 					switch (currGameState) {
 					case mainMenu:
-						SDL_Rect menuRect;
-						menuRect.x = 200;
-						menuRect.y = 200;
-						menuRect.w = 40;
-						menuRect.h = 20;
+						
 
 						if (baton.isPressed(mousePos[0], mousePos[1], mouseButtons[0]))
 							currGameState = playing;
