@@ -13,16 +13,13 @@ const int SCREEN_HEIGHT = 480;
 
 //SDL VARIABLES////////////////
 
-//Event handler
-SDL_Event event;
-
 //spawn a window class
 windowClass window;
 
 //create a renderer 
 SDL_Renderer* renderer;
 
-const Uint8* state;//variable that holds the current keyboard state
+
 
 //A surface we will use to hold the image
 SDL_Surface* drawing = NULL;//name can change I assume you need more of these for more images
@@ -31,14 +28,24 @@ SDL_Surface* drawing = NULL;//name can change I assume you need more of these fo
 
 int mousePos[2] = { 0,0 }; // holds mouse position
 enum GAMESTATE { mainMenu, playing, pause }; // gamestate variables as an enum
-enum DIRECTIONS { UP, DOWN, LEFT, RIGHT };
+enum keyEnum{//enumerating directions for readability
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT
+};
+bool keys[] = { UP, DOWN, LEFT, RIGHT };//using those directions
+
 bool mouseButtons[2] = { false, false };//holds the state of left and right mouse buttons
 
+void input();//declares an input function
+
+bool quit = false;//Main loop variable
 
 int main(int argc, char* args[]) {
 	int currGameState = mainMenu;
 
-	bool quit = false;//Main loop variable
+	
 
 	button baton(200, 200, 40, 20);
 	//Initialize SDL
@@ -53,38 +60,12 @@ int main(int argc, char* args[]) {
 
 			//GAME LOOP////////////////////////////
 			while (!quit) {//while the user doesn't exit the game
-
-				//Handle events on queue
-				while (SDL_PollEvent(&event) != 0) { // SDL_PollEvent checks(polls) for all events
-					//User requests quit         
-					if (event.type == SDL_QUIT) {//if the button says quit, set quit to true and end the gameloop
-						quit = true;
-					}
-					//INPUT SECTION///////
-
-					if (event.type == SDL_MOUSEMOTION || event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_MOUSEBUTTONUP) { // if there is mouse movement
-						SDL_GetMouseState(&mousePos[0], &mousePos[1]); // update the position of the mouse's x and y
-					
-						if (event.button.button == SDL_BUTTON_LEFT) // if you click the left button
-							mouseButtons[0] = true; // updates mouse button variable
-						else
-							mouseButtons[0] = false;
-					//cout << mouseButtons[0] <<  endl;
-					}
-					if (event.type == SDL_KEYUP || event.type == SDL_KEYDOWN) {
-						if (event.key.keysym.sym == SDLK_w) {
-							cout << "UP" << endl;
-							baton.move();
-						}
-					
-					}
+				
+				input();
+				if (keys[UP] == true) {
+					cout << "UP" << endl;
+					keys[UP] = false;
 				}
-				if (baton.isPressed(mousePos[0], mousePos[1], mouseButtons[0])) {
-					cout << "click" << endl;
-					mouseButtons[0] = false;
-				}
-
-
 				if (window.screenSurface != NULL) {//so code don't break
 					//RENDER SECTION////////////////////////////
 					
@@ -95,6 +76,9 @@ int main(int argc, char* args[]) {
 						menuRect.y = 200;
 						menuRect.w = 40;
 						menuRect.h = 20;
+
+						if (baton.isPressed(mousePos[0], mousePos[1], mouseButtons[0]))
+							currGameState = playing;
 
 						SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 						SDL_RenderClear(renderer);
@@ -109,6 +93,11 @@ int main(int argc, char* args[]) {
 						
 						
 						break;
+
+					case playing:
+						SDL_RenderClear(renderer);
+						SDL_RenderPresent(renderer);
+						break;
 					}
 					//SDL_UpdateWindowSurface(window.window);//goes from memory to the screen
 					
@@ -120,3 +109,36 @@ int main(int argc, char* args[]) {
 	window.closeSDL();//closes SDL
 	return 0;//SDL requires main return something at some point hence the return 0
 }//END MAIN////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+void input() {
+	//Event handler
+	SDL_Event event;
+	const Uint8* keyboardState;//variable that holds the current keyboard state
+	while (SDL_PollEvent(&event) != 0) { // SDL_PollEvent checks(polls) for all events
+	if (event.type == SDL_KEYUP || event.type == SDL_KEYDOWN) { // if a key is pressed or released
+		if (event.key.keysym.sym == SDLK_w || event.key.keysym.sym == SDLK_UP) { // 
+			keys[UP] = true;
+		}
+
+	}
+
+
+					//User requests quit         
+	if (event.type == SDL_QUIT) {//if the button says quit, set quit to true and end the gameloop
+		quit = true;
+	}
+		//INPUT SECTION///////
+
+		if (event.type == SDL_MOUSEMOTION || event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_MOUSEBUTTONUP) { // if there is mouse movement
+			SDL_GetMouseState(&mousePos[0], &mousePos[1]); // update the position of the mouse's x and y
+
+			if (event.button.button == SDL_BUTTON_LEFT) // if you click the left button
+				mouseButtons[0] = true; // updates mouse button variable
+			else
+				mouseButtons[0] = false;
+			//cout << mouseButtons[0] <<  endl;
+		}
+
+	}
+}
