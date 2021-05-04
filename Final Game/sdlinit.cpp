@@ -24,8 +24,8 @@ bool windowClass::initialize() {//function starts up SDL, returns true if succes
 		else {
 			//Get window surface if there is no error
 			screenSurface = SDL_GetWindowSurface(window);
+			//intialize the SDL_Image module if there are no errors
 			IMG_Init(IMG_INIT_PNG);
-			
 		}
 		
 	}
@@ -45,20 +45,3 @@ void windowClass::closeSDL() {
 	//Quit SDL subsystems
 	SDL_Quit();
 }
-
-windowClass::windowClass() {}//here just so it works
-
-/*bool loadfiles(std::string file) {//function loads media files, returns true if succesful, returns false if it fails
-
-	bool success = true;//bool tells us if files are able to load
-	SDL_Surface* drawing = NULL;
-	//load an image
-	drawing = SDL_LoadBMP(file);//loads file x.bmp//replace file name for custom files
-	if (drawing == NULL) {//if loading fails
-		printf("Unable to load image %s! SDL Error: %s\n", "monkey.bmp", SDL_GetError());//prints failure and what went wrong
-		success = false;
-	}
-
-	return success;
-}
-*/

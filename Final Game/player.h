@@ -1,5 +1,7 @@
+#include"entity.h"
 #pragma once
-class player
-{
+class player{
+private:
+
 };
 

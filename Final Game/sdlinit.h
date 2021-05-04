@@ -6,14 +6,9 @@ class windowClass {
 public:
 	bool initialize();//initialization function
 	void closeSDL();//quiting function
-	windowClass();
-	//bool loadfiles(std::string image);//The functions which load things seem to be bool as a form of defensive coding
-	SDL_Window* window = NULL;
-	SDL_Surface* screenSurface = NULL;
+	SDL_Window* window = NULL;//window is public as various things call to the window
+	SDL_Surface* screenSurface = NULL;//same as screensurface
 private:
-	
-	const int WIDTH = 640;
+	const int WIDTH = 640;//determines size of window
 	const int HEIGHT = 480;
-	//The surface contained by the window
-	
 };

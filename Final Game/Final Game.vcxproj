@@ -155,8 +155,8 @@
     <ClInclude Include="sdlinit.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Image.png" />
     <Image Include="sprite.png" />
+    <Image Include="walk.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

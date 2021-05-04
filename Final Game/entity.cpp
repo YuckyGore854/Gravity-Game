@@ -3,30 +3,29 @@
 #include<iostream>
 
 
-void entity::update() {//keeping it basic
+void entity::update() {//keeping it basic as it's just a parent class
 	entRect.x += xVel;
 	entRect.y += yVel;
 }
 
-void entity::loadSprites(std::string path, SDL_Renderer* renderer) {
+void entity::loadSprites(std::string path, SDL_Renderer* renderer) {//this function loads a given image into an SDL texture for rendering
 	
-	SDL_Surface* tempSprites = SDL_CreateRGBSurface(0, 100,100, 32, 0xff000000, 0x00ff0000, 0x0000ff00, 0x000000ff);
+	SDL_Surface* tempSprites = NULL;//temporary surface is needed, this will be deleted later
 	
-	tempSprites = IMG_Load(path.c_str());
-	sprites = SDL_CreateTextureFromSurface(renderer, tempSprites);
-
-	
-	if (sprites == NULL) {
-		std::cout << IMG_GetError() << std::endl;
+	tempSprites = IMG_Load(path.c_str());//loads a given string file path into the surface we just made
+	sprites = SDL_CreateTextureFromSurface(renderer, tempSprites);//puts the contents of that surface into our classes texture variable
+	if (sprites == NULL) {//if the texture is blank meaning something wrong happened
+		std::cout << IMG_GetError() << std::endl;//gives us the error
 	}
-	SDL_FreeSurface(tempSprites);
+	SDL_FreeSurface(tempSprites);//deletes the temporary surface from memory
 }
 
 void entity::draw(SDL_Renderer* renderer) {
-	SDL_RenderCopy(renderer, sprites, NULL, &entRect);
+	SDL_RenderCopy(renderer, sprites, NULL, &entRect);//copies the entity's texture onto the renderer
+	//3rd parameter is for only cutting a chunk of a picture, useful for spritesheets
 }
 
-entity::entity(int x, int y, int width, int height) {
+entity::entity(int x, int y, int width, int height) {//constructor just sets up the rectangle and starting position of an entity
 	entRect.x = x;
 	entRect.y = y;
 	entRect.w = width;

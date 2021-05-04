@@ -10,11 +10,14 @@
 class entity
 {
 private:
+	enum direction {
+		facingLeft = false,
+		facingRight = true
+	};
 	double xVel = 0;//holds velocity of an entity
 	double yVel = 0;
 	SDL_Rect entRect;//sdl rect, holds position and rect variables
 	SDL_Texture* sprites;//creates a sprite for an entity, this holds the image of a particular sprite
-
 public:
 
 	entity(int x, int y, int width, int height);//constructor, you feed it the position of the entity
@@ -22,4 +25,3 @@ public:
 	void update();//update/move just adds velocity to position each frame
 	void loadSprites(std::string path, SDL_Renderer* renderer);//loads the image you pass it, second parameter is for keeping the alpha(transparency) of an image
 };
-
