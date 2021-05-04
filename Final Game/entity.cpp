@@ -1,4 +1,6 @@
 #include "entity.h"
+#include<SDL_image.h>
+#include<iostream>
 
 
 void entity::update() {//keeping it basic
@@ -6,15 +8,16 @@ void entity::update() {//keeping it basic
 	entRect.y += yVel;
 }
 
-void entity::loadSprites(char* filename, SDL_PixelFormat* format) {
+void entity::loadSprites(const char* filename, SDL_Renderer* renderer) {
 	SDL_Surface* tempSprites = NULL;
-	tempSprites = SDL_LoadBMP(filename);
+	tempSprites = IMG_Load(filename);
 
-	sprites = SDL_ConvertSurface(tempSprites, format, NULL);
+	sprites = SDL_CreateTextureFromSurface(renderer, tempSprites);
+	SDL_FreeSurface(tempSprites);
 }
 
-void entity::draw(SDL_Surface* screen) {
-	SDL_BlitSurface(sprites, NULL, screen, &entRect);
+void entity::draw(SDL_Renderer* renderer) {
+	SDL_RenderCopy(renderer, sprites, NULL, &entRect);
 }
 
 entity::entity(int x, int y, int width, int height) {

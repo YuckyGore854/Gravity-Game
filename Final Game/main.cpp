@@ -1,11 +1,11 @@
 //Using SDL and standard IO
 #include<SDL.h>
+#include<SDL_image.h>
 #include <stdio.h>
 #include <iostream>
 #include "sdlinit.h"
 #include "button.h"
 #include "entity.h"
-
 
 using namespace std;
 
@@ -22,15 +22,12 @@ windowClass window;
 SDL_Renderer* renderer;
 SDL_PixelFormat* format;
 
-
-//A surface we will use to hold the image
-SDL_Surface* drawing = NULL;//name can change I assume you need more of these for more images
 //END SDL VARIABLES
 
 
 int mousePos[2] = { 0,0 }; // holds mouse position
 enum GAMESTATE { mainMenu, playing, pause }; // gamestate variables as an enum
-enum keyEnum{//enumerating directions for readability
+enum keyEnum : bool{//enumerating directions for readability
 	UP,
 	DOWN,
 	LEFT,
@@ -45,13 +42,14 @@ void input();//declares an input function
 bool quit = false;//Main loop variable
 
 int main(int argc, char* args[]) {
+	
 	int currGameState = mainMenu;//sets gamestate to main menu
 	SDL_Rect menuRect;
 	menuRect.x = 200;
 	menuRect.y = 200;
 	menuRect.w = 40;
 	menuRect.h = 20;
-	format = SDL_GetWindowPixelFormat(window.window);
+
 
 	button baton(200, 200, 40, 20);
 	//Initialize SDL
@@ -61,8 +59,9 @@ int main(int argc, char* args[]) {
 
 	else {
 		renderer = SDL_CreateRenderer(window.window, -1, 0);
-		
-		
+
+		entity sprite(250, 250, 100, 100);
+		sprite.loadSprites("source files/sprite.png", renderer);
 
 			//GAME LOOP////////////////////////////
 			while (!quit) {//while the user doesn't exit the game
@@ -92,12 +91,14 @@ int main(int argc, char* args[]) {
 						//SDL_RenderDrawRect(renderer, &menuRect);
 						baton.draw(renderer);
 						SDL_RenderPresent(renderer);
-						
+						//SDL_UpdateWindowSurface(window.window);
 						
 						break;
 
 					case playing:
+						SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 						SDL_RenderClear(renderer);
+						sprite.draw(renderer);
 						SDL_RenderPresent(renderer);
 						break;
 					}

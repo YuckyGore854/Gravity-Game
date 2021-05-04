@@ -1,5 +1,6 @@
 #include<iostream>
 #include<SDL.h>
+#include<SDL_image.h>
 #include<string>
 #include "sdlinit.h"
 
@@ -23,9 +24,9 @@ bool windowClass::initialize() {//function starts up SDL, returns true if succes
 		else {
 			//Get window surface if there is no error
 			screenSurface = SDL_GetWindowSurface(window);
-			
+			IMG_Init(IMG_INIT_PNG);
 		}
-
+		
 	}
 	return success;//let's us know if sdl was able to initialize
 }
