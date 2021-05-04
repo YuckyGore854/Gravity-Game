@@ -61,7 +61,7 @@ int main(int argc, char* args[]) {
 		renderer = SDL_CreateRenderer(window.window, -1, 0);
 
 		entity sprite(250, 250, 100, 100);
-		sprite.loadSprites("source files/sprite.png", renderer);
+		sprite.loadSprites("sprite.png", renderer);
 
 			//GAME LOOP////////////////////////////
 			while (!quit) {//while the user doesn't exit the game
