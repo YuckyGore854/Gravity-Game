@@ -25,6 +25,7 @@ bool windowClass::initialize() {//function starts up SDL, returns true if succes
 			//Get window surface if there is no error
 			screenSurface = SDL_GetWindowSurface(window);
 			IMG_Init(IMG_INIT_PNG);
+			
 		}
 		
 	}
