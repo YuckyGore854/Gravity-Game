@@ -25,9 +25,11 @@ void entity::draw(SDL_Renderer* renderer) {
 	//3rd parameter is for only cutting a chunk of a picture, useful for spritesheets
 }
 
-entity::entity(int x, int y, int width, int height) {//constructor just sets up the rectangle and starting position of an entity
-	entRect.x = x;
-	entRect.y = y;
-	entRect.w = width;
-	entRect.h = height;
+entity::entity() {//constructor just sets up the rectangle and starting position of an entity
+	entRect.x = 100;
+	entRect.y = 100;
+	entRect.w = 100;
+	entRect.h = 100;
+	frameRect = entRect;
 }
+
