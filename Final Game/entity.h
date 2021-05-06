@@ -10,10 +10,8 @@
 class entity
 {
 protected://the reason this is protected and not private is that the child class needs access to these variables
-	enum direction {
-		facingLeft = false,
-		facingRight = true
-	};
+	bool facingRight = true;
+	
 	double xVel = 0;//holds velocity of an entity
 	double yVel = 0;
 	SDL_Rect entRect;//sdl rect, holds position and rect variables

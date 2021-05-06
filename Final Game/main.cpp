@@ -19,19 +19,20 @@ windowClass window;
 SDL_Renderer* renderer;//the renderer was introduced in SDL2
 //allows the GPU to draw things rather than relying on the CPU, resulting in faster code
 
+
+
 //END SDL VARIABLES
 
 //GAME/INPUT VARIABLES
 int mousePos[2] = { 0,0 }; // holds mouse position
 enum GAMESTATE { mainMenu, playing, pause }; // gamestate variables as an enum
-enum keyEnum{//enumerating directions for readability
-	UP,
-	DOWN,
-	LEFT,
-	RIGHT
-};
-bool keys[] = { UP, DOWN, LEFT, RIGHT };//using those directions
 
+class keyboard {
+public:
+	bool keys[322];//holds the keys all of the keys pressed on the keyboard
+	keyboard();
+};
+keyboard keyBoard;
 bool mouseButtons[2] = { false, false };//holds the state of left and right mouse buttons
 
 void input();//declares an input function
@@ -42,6 +43,8 @@ bool quit = false;//Main loop variable
 
 
 int main(int argc, char* args[]) {
+
+
 	vector<entity*> entities;//vector holding pouinters to all current entities
 	vector<entity*>::iterator entIter;//allows us to iterate through vector
 	int currGameState = mainMenu;//sets gamestate to main menu
@@ -52,8 +55,13 @@ int main(int argc, char* args[]) {
 	menuRect.h = 20;
 
 
+	int fps = 60;//these variables are for manually capping the framerate
+	int frameDelay = 1000 / fps;//this is the frameDelay variable, or approximately how long each frame should take
 	
-								   //Initialize SDL
+	Uint32 frameStart;//this variable holds the amount of time at the beginning of a frame
+	int frameTime;//this variable calculates the actual time of the current frame
+
+	//Initialize SDL
 	if (!window.initialize()) {
 		std::cout << "Failed to initialize" << std::endl;
 	}
@@ -62,12 +70,13 @@ int main(int argc, char* args[]) {
 		renderer = SDL_CreateRenderer(window.window, -1, 0);//sets up the renderer
 		
 		player sprite(200,200,100,100);//spawns an entity
-		sprite.loadSprites("sprite.png", renderer);//loads sprite.png
+		sprite.loadSprites("walk.png", renderer);//loads sprite.png
 		button startButton(35, 0, 500, 500);//spawns the (temporary) main menu button
 		startButton.loadSprites("play.png", renderer);
 		//GAME LOOP////////////////////////////
 		while (!quit) {//while the user doesn't exit the game
-				
+			frameStart = SDL_GetTicks();
+
 			input();//gets keyboard input and mouse input
 
 				switch (currGameState) {//gamestates are in an enumerated switch statement
@@ -90,6 +99,8 @@ int main(int argc, char* args[]) {
 					break;
 
 				case playing:
+					sprite.movement(keyBoard.keys[SDL_SCANCODE_LEFT], keyBoard.keys[SDL_SCANCODE_RIGHT], keyBoard.keys[SDL_SCANCODE_UP], keyBoard.keys[SDL_SCANCODE_DOWN]);
+					
 					SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 					SDL_RenderClear(renderer);
 					sprite.draw(renderer);
@@ -97,6 +108,11 @@ int main(int argc, char* args[]) {
 					SDL_RenderPresent(renderer);
 					break;
 					}
+
+				frameTime = SDL_GetTicks() - frameStart;//calculates how long a frame has been rendered for
+
+				if (frameDelay > frameTime)//if the wanted amount of time between frames is bigger than the current amount of time it took to render the last frame
+					SDL_Delay(frameDelay - frameTime);//delay the game until 16.66... frames have passed
 				}
 			//END GAMELOOP///////////////////////
 	}
@@ -109,23 +125,13 @@ int main(int argc, char* args[]) {
 void input() {
 	//Event handler
 	SDL_Event event;
-	const Uint8* keyboardState;//variable that holds the current keyboard state
 	while (SDL_PollEvent(&event) != 0) { // SDL_PollEvent checks(polls) for all events
-	if (event.type == SDL_KEYUP || event.type == SDL_KEYDOWN) { // if a key is pressed or released
-		if (event.key.keysym.sym == SDLK_w || event.key.keysym.sym == SDLK_UP) { // 
-			keys[UP] = true;
-		}
-		else
-			keys[UP] = false;
-		if (event.key.keysym.sym == SDLK_s || event.key.keysym.sym == SDLK_DOWN) {
-			keys[DOWN] = true;
-		}
-		if (event.key.keysym.sym == SDLK_a || event.key.keysym.sym == SDLK_LEFT) {
-			keys[LEFT] = true;
-		}
-		if (event.key.keysym.sym == SDLK_d || event.key.keysym.sym == SDLK_RIGHT) {
-			keys[RIGHT] = true;
-		}
+	if (event.type == SDL_KEYDOWN) { // if a key is pressed or released
+		
+		keyBoard.keys[event.key.keysym.sym] = true;
+	}
+	if (event.type == SDL_KEYUP) {
+		keyBoard.keys[event.key.keysym.sym] = false;
 	}
 					//User requests quit         
 	if (event.type == SDL_QUIT) {//if the button says quit, set quit to true and end the gameloop
@@ -144,4 +150,9 @@ void input() {
 			
 		}
 	}
+}
+
+keyboard::keyboard() {
+	for (int i = 0; i < 322; i++) //sets all the values of keys to false
+		keys[i] = false;
 }
