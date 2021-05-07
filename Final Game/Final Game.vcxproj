@@ -142,6 +142,7 @@
     <ClCompile Include="button.cpp" />
     <ClCompile Include="entity.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="map.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="sdlinit.cpp" />
   </ItemGroup>
@@ -151,11 +152,13 @@
   <ItemGroup>
     <ClInclude Include="button.h" />
     <ClInclude Include="entity.h" />
+    <ClInclude Include="map.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="sdlinit.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="background.png" />
+    <Image Include="New Piskel.png" />
     <Image Include="play.png" />
     <Image Include="sprite.png" />
     <Image Include="walk.png" />

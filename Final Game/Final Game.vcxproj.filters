@@ -21,9 +21,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="sdlinit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -34,6 +31,12 @@
       <Filter>Source Files\game objects</Filter>
     </ClCompile>
     <ClCompile Include="entity.cpp">
+      <Filter>Source Files\game objects</Filter>
+    </ClCompile>
+    <ClCompile Include="map.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
       <Filter>Source Files\game objects</Filter>
     </ClCompile>
   </ItemGroup>
@@ -53,6 +56,9 @@
     <ClInclude Include="player.h">
       <Filter>Resource Files\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="map.h">
+      <Filter>Resource Files\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="sprite.png">
@@ -65,6 +71,9 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="background.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="New Piskel.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

@@ -1,7 +1,7 @@
 #include "player.h"
 #include<iostream>
 
-player::player(int x, int y, int width, int height) {//constructor, you feed it the position of the entity)
+player::player(float x, float y, float width, float height) {//constructor, you feed it the position of the entity)
 	entRect.x = x;
 	entRect.y = y;
 	entRect.w = width;
@@ -16,9 +16,9 @@ void player::draw(SDL_Renderer* renderer) {
 	SDL_RendererFlip flip = SDL_FLIP_HORIZONTAL;
 	
 	if (facingRight)
-		SDL_RenderCopy(renderer, sprites, &frameRect, &entRect);//begins by rendering a sprite
+		SDL_RenderCopyF(renderer, sprites, &frameRect, &entRect);//begins by rendering a sprite
 	else
-		SDL_RenderCopyEx(renderer, sprites, &frameRect, &entRect, NULL, NULL, flip);
+		SDL_RenderCopyExF(renderer, sprites, &frameRect, &entRect, NULL, NULL, flip);
 	ticker++;//ups the ticker
 	if (ticker > 6) {//once 6 frames have passed
 		ticker = 0;//resets ticker
@@ -35,14 +35,11 @@ void player::movement(bool up, bool down, bool left, bool right) {
 
 		if (left) {
 			facingRight = false;
-			xVel = -1;
+			xVel = -2;
 		}
 		if (right) {
 			facingRight = true;
-			xVel = 1;
-		}
-		if (!left && !right) {
-			xVel = 0;
+			xVel = 2;
 		}
 		if (up) {
 			yVel = -1;
@@ -53,5 +50,9 @@ void player::movement(bool up, bool down, bool left, bool right) {
 		if (!up && !down) {
 			yVel = 0;
 		}
+		xVel *= 0.95;
 }
 
+void player::gravity() {
+
+}

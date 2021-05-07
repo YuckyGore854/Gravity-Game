@@ -12,9 +12,9 @@ class entity
 protected://the reason this is protected and not private is that the child class needs access to these variables
 	bool facingRight = true;
 	
-	double xVel = 0;//holds velocity of an entity
-	double yVel = 0;
-	SDL_Rect entRect;//sdl rect, holds position and rect variables
+	float xVel = 0;//holds velocity of an entity
+	float yVel = 0;
+	SDL_FRect entRect;//sdl rect, holds position and rect variables
 	SDL_Rect frameRect;
 	SDL_Texture* sprites;//creates a sprite for an entity, this holds the image of a particular sprite
 public:

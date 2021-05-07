@@ -7,6 +7,7 @@
 #include "button.h"//creates a button
 #include "entity.h"//parent class of most things
 #include "player.h"//player
+#include "map.h"
 
 using namespace std;//generally bad practice but this is a small project without many moving parts
 
@@ -72,6 +73,8 @@ int main(int argc, char* args[]) {
 		startButton.loadSprites("play.png", renderer);
 		entity background(0, 0, 640, 480);
 		background.loadSprites("background.png", renderer);
+		map gameMap;
+		gameMap.loadSprites("New Piskel.png", renderer);
 
 		//GAME LOOP////////////////////////////
 		while (!quit) {//while the user doesn't exit the game
@@ -112,6 +115,7 @@ int main(int argc, char* args[]) {
 					SDL_RenderClear(renderer);
 					background.draw(renderer);
 					sprite.draw(renderer);
+					gameMap.draw(renderer);
 					
 					SDL_RenderPresent(renderer);
 					break;
