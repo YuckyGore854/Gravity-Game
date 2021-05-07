@@ -19,6 +19,7 @@ protected://the reason this is protected and not private is that the child class
 	SDL_Texture* sprites;//creates a sprite for an entity, this holds the image of a particular sprite
 public:
 	entity();
+	entity(int x, int y, int w, int h);
 	void draw(SDL_Renderer* renderer);//drawing function draws to the screen which you pass it
 	void update();//update/move just adds velocity to position each frame
 	void loadSprites(std::string path, SDL_Renderer* renderer);//loads the image you pass it, second parameter is for keeping the alpha(transparency) of an image

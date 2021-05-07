@@ -25,12 +25,13 @@ SDL_Renderer* renderer;//the renderer was introduced in SDL2
 
 //GAME/INPUT VARIABLES
 int mousePos[2] = { 0,0 }; // holds mouse position
-enum GAMESTATE { mainMenu, playing, pause }; // gamestate variables as an enum
+enum GAMESTATE { mainMenu, playing, pause, settings }; // gamestate variables as an enum
 enum keyenum {
-	UP, DOWN, LEFT, RIGHT
+	UP, DOWN, LEFT, RIGHT, ESCAPE
 };
 bool mouseButtons[2] = { false, false };//holds the state of left and right mouse buttons
-bool keys[4] = { false, false, false, false };
+bool keys[5] = { false, false, false, false, false };
+bool fullscreen = false;
 void input();//declares an input function
 
 bool quit = false;//Main loop variable
@@ -65,14 +66,24 @@ int main(int argc, char* args[]) {
 	else {
 		renderer = SDL_CreateRenderer(window.window, -1, 0);//sets up the renderer
 		
-		player sprite(200,200,100,100);//spawns an entity
+		player sprite(200,350,100,100);//spawns an entity
 		sprite.loadSprites("walk.png", renderer);//loads sprite.png
-		button startButton(35, 0, 500, 500);//spawns the (temporary) main menu button
+		button startButton(640/2 - 100, 480/2 - 100, 200, 200);//spawns the main menu button
 		startButton.loadSprites("play.png", renderer);
+		entity background(0, 0, 640, 480);
+		background.loadSprites("background.png", renderer);
+
 		//GAME LOOP////////////////////////////
 		while (!quit) {//while the user doesn't exit the game
 			frameStart = SDL_GetTicks();
 
+			if (keys[ESCAPE]) {
+				fullscreen = !fullscreen;//inverts the fullscreen variable if you press escape
+			}
+			if (!fullscreen)
+				SDL_SetWindowFullscreen(window.window, 0);//make the game windowed if not in fullscreen
+			else
+				SDL_SetWindowFullscreen(window.window, SDL_WINDOW_FULLSCREEN);//make the game fullscreened if fullscreen
 			input();//gets keyboard input and mouse input
 
 				switch (currGameState) {//gamestates are in an enumerated switch statement
@@ -99,16 +110,23 @@ int main(int argc, char* args[]) {
 					
 					SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 					SDL_RenderClear(renderer);
+					background.draw(renderer);
 					sprite.draw(renderer);
 					
 					SDL_RenderPresent(renderer);
 					break;
-					}
+				
+				case settings:
+
+					SDL_RenderClear(renderer);
+
+					SDL_RenderPresent(renderer);
+				}
 
 				frameTime = SDL_GetTicks() - frameStart;//calculates how long a frame has been rendered for
 
 				if (frameDelay > frameTime)//if the wanted amount of time between frames is bigger than the current amount of time it took to render the last frame
-					SDL_Delay(frameDelay - frameTime);//delay the game until 16.66... frames have passed
+					SDL_Delay(frameDelay - frameTime);//delay the game until 16.66... miliseconds have passed
 				}
 			//END GAMELOOP///////////////////////
 	}
@@ -137,6 +155,9 @@ void input() {
 			if (keyboardState[SDL_SCANCODE_RIGHT]) {
 				keys[RIGHT] = true;
 			}
+			if (keyboardState[SDL_SCANCODE_ESCAPE]) {
+				keys[ESCAPE] = true;
+			}
 		}
 		if (event.type == SDL_KEYUP) {
 			if (!keyboardState[SDL_SCANCODE_UP]) {
@@ -150,6 +171,9 @@ void input() {
 			}
 			if (!keyboardState[SDL_SCANCODE_RIGHT]) {
 				keys[RIGHT] = false;
+			}
+			if (!keyboardState[SDL_SCANCODE_ESCAPE]) {
+				keys[ESCAPE] = false;
 			}
 		}
 					//User requests quit         

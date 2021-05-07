@@ -41,6 +41,17 @@ void player::movement(bool up, bool down, bool left, bool right) {
 			facingRight = true;
 			xVel = 1;
 		}
-	std::cout << xVel << std::endl;
+		if (!left && !right) {
+			xVel = 0;
+		}
+		if (up) {
+			yVel = -1;
+		}
+		if (down) {
+			yVel = 1;
+		}
+		if (!up && !down) {
+			yVel = 0;
+		}
 }
 

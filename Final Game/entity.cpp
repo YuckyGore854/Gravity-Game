@@ -20,6 +20,13 @@ void entity::loadSprites(std::string path, SDL_Renderer* renderer) {//this funct
 	SDL_FreeSurface(tempSprites);//deletes the temporary surface from memory
 }
 
+entity::entity(int x, int y, int w, int h) {
+	entRect.x = x;
+	entRect.y = y;
+	entRect.w = w;
+	entRect.h = h;
+}
+
 void entity::draw(SDL_Renderer* renderer) {
 	SDL_RenderCopy(renderer, sprites, NULL, &entRect);//copies the entity's texture onto the renderer
 	//3rd parameter is for only cutting a chunk of a picture, useful for spritesheets

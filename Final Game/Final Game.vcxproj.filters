@@ -64,5 +64,8 @@
     <Image Include="play.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="background.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

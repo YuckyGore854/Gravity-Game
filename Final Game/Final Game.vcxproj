@@ -155,6 +155,7 @@
     <ClInclude Include="sdlinit.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="background.png" />
     <Image Include="play.png" />
     <Image Include="sprite.png" />
     <Image Include="walk.png" />
