@@ -29,16 +29,18 @@ void player::draw(SDL_Renderer* renderer) {
 	}
 }
 
-void player::movement(bool left, bool right, bool up, bool down) {
+void player::movement(bool up, bool down, bool left, bool right) {
 	entRect.x += xVel;
 	entRect.y += yVel;
-	if (left) {
-		facingRight = false;
-		xVel = -1;
-	}
-	if (right) {
-		facingRight = true;
-		xVel += 1;
-	}
-	std::cout << facingRight << std::endl;
+
+		if (left) {
+			facingRight = false;
+			xVel = -1;
+		}
+		if (right) {
+			facingRight = true;
+			xVel = 1;
+		}
+	std::cout << xVel << std::endl;
 }
+

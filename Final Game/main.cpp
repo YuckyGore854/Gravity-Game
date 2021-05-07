@@ -26,15 +26,11 @@ SDL_Renderer* renderer;//the renderer was introduced in SDL2
 //GAME/INPUT VARIABLES
 int mousePos[2] = { 0,0 }; // holds mouse position
 enum GAMESTATE { mainMenu, playing, pause }; // gamestate variables as an enum
-
-class keyboard {
-public:
-	bool keys[322];//holds the keys all of the keys pressed on the keyboard
-	keyboard();
+enum keyenum {
+	UP, DOWN, LEFT, RIGHT
 };
-keyboard keyBoard;
 bool mouseButtons[2] = { false, false };//holds the state of left and right mouse buttons
-
+bool keys[4] = { false, false, false, false };
 void input();//declares an input function
 
 bool quit = false;//Main loop variable
@@ -99,7 +95,7 @@ int main(int argc, char* args[]) {
 					break;
 
 				case playing:
-					sprite.movement(keyBoard.keys[SDL_SCANCODE_LEFT], keyBoard.keys[SDL_SCANCODE_RIGHT], keyBoard.keys[SDL_SCANCODE_UP], keyBoard.keys[SDL_SCANCODE_DOWN]);
+					sprite.movement(keys[UP], keys[DOWN], keys[LEFT], keys[RIGHT]);
 					
 					SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 					SDL_RenderClear(renderer);
@@ -125,34 +121,52 @@ int main(int argc, char* args[]) {
 void input() {
 	//Event handler
 	SDL_Event event;
+	const Uint8* keyboardState = SDL_GetKeyboardState(NULL);
 	while (SDL_PollEvent(&event) != 0) { // SDL_PollEvent checks(polls) for all events
-	if (event.type == SDL_KEYDOWN) { // if a key is pressed or released
-		
-		keyBoard.keys[event.key.keysym.sym] = true;
-	}
-	if (event.type == SDL_KEYUP) {
-		keyBoard.keys[event.key.keysym.sym] = false;
-	}
-					//User requests quit         
-	if (event.type == SDL_QUIT) {//if the button says quit, set quit to true and end the gameloop
-		quit = true;
-	}
-		//INPUT SECTION///////
 
-		if (event.type == SDL_MOUSEMOTION || event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_MOUSEBUTTONUP) { // if there is mouse movement
-			SDL_GetMouseState(&mousePos[0], &mousePos[1]); // update the position of the mouse's x and y
-
-			if (event.button.button == SDL_BUTTON_LEFT) // if you click the left button
-				mouseButtons[0] = true; // updates mouse button variable
-			
-			if (event.button.button == SDL_BUTTON_RIGHT)
-				mouseButtons[1] = true;
-			
+		if (event.type == SDL_KEYDOWN) { // if a key is pressed or released
+			if (keyboardState[SDL_SCANCODE_UP]) {
+				keys[UP] = true;
+			}
+			if (keyboardState[SDL_SCANCODE_DOWN]) {
+				keys[DOWN] = true;
+			}
+			if (keyboardState[SDL_SCANCODE_LEFT]) {
+				keys[LEFT] = true;
+			}
+			if (keyboardState[SDL_SCANCODE_RIGHT]) {
+				keys[RIGHT] = true;
+			}
 		}
-	}
-}
+		if (event.type == SDL_KEYUP) {
+			if (!keyboardState[SDL_SCANCODE_UP]) {
+				keys[UP] = false;
+			}
+			if (!keyboardState[SDL_SCANCODE_DOWN]) {
+				keys[DOWN] = false;
+			}
+			if (!keyboardState[SDL_SCANCODE_LEFT]) {
+				keys[LEFT] = false;
+			}
+			if (!keyboardState[SDL_SCANCODE_RIGHT]) {
+				keys[RIGHT] = false;
+			}
+		}
+					//User requests quit         
+		if (event.type == SDL_QUIT) {//if the button says quit, set quit to true and end the gameloop
+			quit = true;
+		}
+			//INPUT SECTION///////
 
-keyboard::keyboard() {
-	for (int i = 0; i < 322; i++) //sets all the values of keys to false
-		keys[i] = false;
+			if (event.type == SDL_MOUSEMOTION || event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_MOUSEBUTTONUP) { // if there is mouse movement
+				SDL_GetMouseState(&mousePos[0], &mousePos[1]); // update the position of the mouse's x and y
+
+				if (event.button.button == SDL_BUTTON_LEFT) // if you click the left button
+					mouseButtons[0] = true; // updates mouse button variable
+			
+				if (event.button.button == SDL_BUTTON_RIGHT)
+					mouseButtons[1] = true;
+			
+			}
+	}
 }
