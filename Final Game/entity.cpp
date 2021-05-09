@@ -28,7 +28,7 @@ entity::entity(int x, int y, int w, int h) {
 }
 
 void entity::draw(SDL_Renderer* renderer) {
-	SDL_RenderCopy(renderer, sprites, NULL, &entRect);//copies the entity's texture onto the renderer
+	SDL_RenderCopyF(renderer, sprites, NULL, &entRect);//copies the entity's texture onto the renderer
 	//3rd parameter is for only cutting a chunk of a picture, useful for spritesheets
 }
 
@@ -37,6 +37,10 @@ entity::entity() {//constructor just sets up the rectangle and starting position
 	entRect.y = 100;
 	entRect.w = 100;
 	entRect.h = 100;
-	frameRect = entRect;
+
+	frameRect.x = 100;
+	frameRect.y = 100;
+	frameRect.w = 100;
+	frameRect.h = 100;
 }
 
