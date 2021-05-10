@@ -30,29 +30,49 @@ void player::draw(SDL_Renderer* renderer) {
 }
 
 void player::movement(bool up, bool down, bool left, bool right) {
-	entRect.x += xVel;
-	entRect.y += yVel;
-
-		if (left) {
-			facingRight = false;
-			xVel = -2;
+	update();
+	
+	if (xVel < 2 and xVel > -2) {
+		if (left) {//accelerates in different directions for different directions
+			xVel -= 0.3;
 		}
 		if (right) {
-			facingRight = true;
-			xVel = 2;
+			xVel += 0.3;
 		}
-		if (up) {
-			yVel = -1;
-		}
-		if (down) {
-			yVel = 1;
-		}
-		if (!up && !down) {
-			yVel = 0;
-		}
-		xVel *= 0.95;
+	}
+	else
+		friction();//slow down in case the velocity exceeds the max speed. prevents unresponsive movement
+	if (!left && !right) {//if you aren't moving left or right, slow down to 0
+		friction();
+	}
+
+	if (up && isOnGround) {
+		yVel = -5;
+	}
+	
+	if (xVel > 0) {
+		facingRight = true;
+	}
+	if (xVel < 0) {
+		facingRight = false;
+	}
+	if (entRect.y + entRect.h > 460) {
+		isOnGround = true;
+	}
+	else
+		isOnGround = false;
+
+	if (!isOnGround) {
+		gravity();
+	}
+
+}
+
+void player::friction() {
+	xVel *= 0.9;
+	yVel *= 0.9;
 }
 
 void player::gravity() {
-
+	yVel += 0.1;
 }

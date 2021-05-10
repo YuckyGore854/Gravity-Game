@@ -37,6 +37,10 @@ entity::entity() {//constructor just sets up the rectangle and starting position
 	entRect.y = 100;
 	entRect.w = 100;
 	entRect.h = 100;
-	frameRect = { 100,100,100,100 };
+
+	frameRect.x = 100;
+	frameRect.y = 100;
+	frameRect.w = 100;
+	frameRect.h = 100;
 }
 

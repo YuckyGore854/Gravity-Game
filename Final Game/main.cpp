@@ -67,8 +67,8 @@ int main(int argc, char* args[]) {
 	else {
 		renderer = SDL_CreateRenderer(window.window, -1, 0);//sets up the renderer
 		
-		player sprite(200,350,100,100);//spawns an entity
-		sprite.loadSprites("walk.png", renderer);//loads sprite.png
+		player player(200,350,100,100);//spawns an entity
+		player.loadSprites("walk.png", renderer);//loads sprite.png
 		button startButton(640/2 - 100, 480/2 - 100, 200, 200);//spawns the main menu button
 		startButton.loadSprites("play.png", renderer);
 		entity background(0, 0, 640, 480);
@@ -109,12 +109,13 @@ int main(int argc, char* args[]) {
 					break;
 
 				case playing:
-					sprite.movement(keys[UP], keys[DOWN], keys[LEFT], keys[RIGHT]);
+					player.movement(keys[UP], keys[DOWN], keys[LEFT], keys[RIGHT]);
+					
 					
 					SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 					SDL_RenderClear(renderer);
 					background.draw(renderer);
-					sprite.draw(renderer);
+					player.draw(renderer);
 					gameMap.draw(renderer);
 					
 					SDL_RenderPresent(renderer);

@@ -9,6 +9,8 @@ public:
 private:
 	int ticker;//variables for drawing spritesheets
 	int frameCounter;
+	void friction();
 	void gravity();
+	bool isOnGround = false;
 };
 
