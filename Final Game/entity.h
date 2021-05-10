@@ -15,7 +15,7 @@ protected://the reason this is protected and not private is that the child class
 	float xVel = 0;//holds velocity of an entity
 	float yVel = 0;
 	SDL_FRect entRect;//sdl rect, holds position and rect variables
-	SDL_Rect frameRect;
+	SDL_Rect frameRect;//this rect holds which frame of animation the entity is on
 	SDL_Texture* sprites;//creates a sprite for an entity, this holds the image of a particular sprite
 public:
 	entity();
