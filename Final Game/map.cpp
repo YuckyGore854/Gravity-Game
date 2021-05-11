@@ -18,3 +18,12 @@ void map::draw(SDL_Renderer* renderer) {
 map::map() {
 
 }
+
+bool map::collide(float x, float y) {
+	int xInt = int(x + 0.5);//converts floating point numbers into integers for collision logic
+	int yInt = int(y + 0.5);
+
+	if (gameMap[(yInt + 100) / 20][(xInt + 100)]){
+		std::cout << "collide" << std::endl;
+		}
+}

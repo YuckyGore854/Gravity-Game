@@ -29,7 +29,7 @@ void player::draw(SDL_Renderer* renderer) {
 	}
 }
 
-void player::movement(bool up, bool down, bool left, bool right) {
+void player::movement(bool up, bool down, bool left, bool right, bool collide) {
 	update();
 	
 	if (xVel < 2 and xVel > -2) {
@@ -56,7 +56,7 @@ void player::movement(bool up, bool down, bool left, bool right) {
 	if (xVel < 0) {
 		facingRight = false;
 	}
-	if (entRect.y + entRect.h > 460) {
+	if (collide) {
 		isOnGround = true;
 	}
 	else
