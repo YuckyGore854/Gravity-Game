@@ -109,8 +109,7 @@ int main(int argc, char* args[]) {
 					break;
 
 				case playing:
-					player.movement(keys[UP], keys[DOWN], keys[LEFT], keys[RIGHT]);
-					
+					player.movement(keys[UP], keys[DOWN], keys[LEFT], keys[RIGHT], gameMap.collide(player.getX(), player.getY()));
 					
 					SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 					SDL_RenderClear(renderer);

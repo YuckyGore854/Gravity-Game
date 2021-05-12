@@ -1,7 +1,4 @@
 #include "entity.h"
-#include<SDL_image.h>
-#include<iostream>
-
 
 void entity::update() {//keeping it basic as it's just a parent class
 	entRect.x += xVel;

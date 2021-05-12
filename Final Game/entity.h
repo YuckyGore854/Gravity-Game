@@ -5,6 +5,8 @@
 */
 
 #include <SDL.h>
+#include<iostream>
+#include<SDL_image.h>
 #include <string>
 #pragma once
 class entity
