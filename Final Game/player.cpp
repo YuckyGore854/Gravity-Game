@@ -60,13 +60,13 @@ void player::movement(bool up, bool down, bool left, bool right, bool footCollid
 	}
 
 	if (yVel > 0) {//determines if the player is rising or falling based on y velocity
-		yDirection = 0;
+		yDirection = DOWN;
 	}
 	if (yVel < 0) {
-		yDirection = 1;
+		yDirection = UP;
 	}
 
-	if (footCollide && yDirection == 0) {//if the player collides with a piece of the map and the player is falling down
+	if (footCollide && yDirection == DOWN) {//if the player collides with a piece of the map and the player is falling down
 		isOnGround = true;
 		yVel = 0;
 	}
@@ -76,7 +76,7 @@ void player::movement(bool up, bool down, bool left, bool right, bool footCollid
 	if (!isOnGround) {//falls down if the player isn't on the ground
 		gravity();
 	}
-
+	
 	
 }
 float player::getX() {

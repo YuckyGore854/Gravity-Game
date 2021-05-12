@@ -1,0 +1,29 @@
+#include "background.h"
+
+background::background(int x, int y, int w, int h) {
+	entRect.x = x;
+	entRect.y = y;
+	entRect.w = w;
+	entRect.h = h;
+	entRect2.x = x;
+	entRect2.y = y;
+	entRect2.h = h;
+	entRect2.w = w;
+}
+
+
+
+void background::draw(SDL_Renderer* renderer, float offSet) {
+	float currOffset = offSet;
+
+	if (offSet < 640) {
+		currOffset = 0;
+	}
+	else {
+		entRect.x = currOffset;
+		entRect2.x = currOffset + 640;
+	}
+
+	SDL_RenderCopyF(renderer, sprites, NULL, &entRect);
+	SDL_RenderCopyF(renderer, sprites, NULL, &entRect2);
+}

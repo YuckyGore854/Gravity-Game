@@ -39,6 +39,9 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files\game objects</Filter>
     </ClCompile>
+    <ClCompile Include="background.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -59,11 +62,11 @@
     <ClInclude Include="map.h">
       <Filter>Resource Files\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="background.h">
+      <Filter>Resource Files\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="sprite.png">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="walk.png">
       <Filter>Resource Files</Filter>
     </Image>
@@ -74,6 +77,9 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="New Piskel.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="grab.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

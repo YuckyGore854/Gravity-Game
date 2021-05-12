@@ -8,11 +8,18 @@ public:
 	float getX();//these return the position of the player, used in main to get position
 	float getY();
 private:
-	int ticker;//variables for drawing spritesheets
-	int frameCounter;//variable for what frame of animation to draw
+	int ticker = 0;//variables for drawing spritesheets
+	int frameCounter = 0;//variable for what frame of animation to draw
 	void friction();//slow down with friction
 	void gravity();//fall to the ground with gravity
 	bool isOnGround = false;//holds if the player is on the ground
 	int yDirection = 0;//0 is down, 1 is up
+	int playerState = walking;
+	enum state {
+		walking, jumping, grabbing
+	};
+	enum verticalDirection {
+		DOWN, UP
+	};
 };
 

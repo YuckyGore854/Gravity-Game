@@ -21,7 +21,7 @@ bool map::collide(float x, float y) {
 	int xInt = int(x + 0.5);//converts floating point numbers into integers for collision logic
 	int yInt = int(y + 0.5);
 
-	if (gameMap[(yInt + 100) / 20][(xInt + 140) / 24] == 1 || gameMap[(yInt+100)/20][(xInt + 160) / 24] == 1){//checks for collision at the players feet
+	if (gameMap[(yInt + 100) / 20][(xInt + 140) / 24] == 1 || gameMap[(yInt+100)/20][(xInt + 172) / 24] == 1){//checks for collision at the players feet
 		return true;//returns true if the player's position is right above a block
 	}
 	return false;//returns false otherwise

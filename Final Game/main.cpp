@@ -8,6 +8,7 @@
 #include "entity.h"//parent class of most things
 #include "player.h"//player
 #include "map.h"
+#include "background.h"
 
 using namespace std;//generally bad practice but this is a small project without many moving parts
 
@@ -41,8 +42,6 @@ bool quit = false;//Main loop variable
 
 
 int main(int argc, char* args[]) {
-
-
 	vector<entity*> entities;//vector holding pouinters to all current entities
 	vector<entity*>::iterator entIter;//allows us to iterate through vector
 	int currGameState = mainMenu;//sets gamestate to main menu
@@ -51,7 +50,7 @@ int main(int argc, char* args[]) {
 	menuRect.y = 200;
 	menuRect.w = 40;
 	menuRect.h = 20;
-
+	float scrollingOffset = 0;
 
 	int fps = 60;//these variables are for manually capping the framerate
 	int frameDelay = 1000 / fps;//this is the frameDelay variable, or approximately how long each frame should take
@@ -71,8 +70,8 @@ int main(int argc, char* args[]) {
 		player.loadSprites("walk.png", renderer);//loads sprite.png
 		button startButton(640/2 - 100, 480/2 - 100, 200, 200);//spawns the main menu button
 		startButton.loadSprites("play.png", renderer);
-		entity background(0, 0, 640, 480);
-		background.loadSprites("background.png", renderer);
+		background backGround(0, 0, 640, 480);
+		backGround.loadSprites("background.png", renderer);
 		map gameMap;
 		gameMap.loadSprites("New Piskel.png", renderer);
 
@@ -113,7 +112,11 @@ int main(int argc, char* args[]) {
 					
 					SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 					SDL_RenderClear(renderer);
-					background.draw(renderer);
+
+					if(player.getX() > 200)
+						scrollingOffset = -player.getX();
+					
+					backGround.draw(renderer, scrollingOffset);
 					player.draw(renderer);
 					gameMap.draw(renderer);
 					
@@ -147,16 +150,16 @@ void input() {
 	while (SDL_PollEvent(&event) != 0) { // SDL_PollEvent checks(polls) for all events
 
 		if (event.type == SDL_KEYDOWN) { // if a key is pressed or released
-			if (keyboardState[SDL_SCANCODE_UP]) {
+			if (keyboardState[SDL_SCANCODE_UP] || keyboardState[SDL_SCANCODE_W]) {
 				keys[UP] = true;
 			}
-			if (keyboardState[SDL_SCANCODE_DOWN]) {
+			if (keyboardState[SDL_SCANCODE_DOWN] || keyboardState[SDL_SCANCODE_S]) {
 				keys[DOWN] = true;
 			}
-			if (keyboardState[SDL_SCANCODE_LEFT]) {
+			if (keyboardState[SDL_SCANCODE_LEFT] || keyboardState[SDL_SCANCODE_A]) {
 				keys[LEFT] = true;
 			}
-			if (keyboardState[SDL_SCANCODE_RIGHT]) {
+			if (keyboardState[SDL_SCANCODE_RIGHT] || keyboardState[SDL_SCANCODE_D]) {
 				keys[RIGHT] = true;
 			}
 			if (keyboardState[SDL_SCANCODE_ESCAPE]) {
@@ -164,16 +167,16 @@ void input() {
 			}
 		}
 		if (event.type == SDL_KEYUP) {
-			if (!keyboardState[SDL_SCANCODE_UP]) {
+			if (!keyboardState[SDL_SCANCODE_UP] && !keyboardState[SDL_SCANCODE_W]) {
 				keys[UP] = false;
 			}
-			if (!keyboardState[SDL_SCANCODE_DOWN]) {
+			if (!keyboardState[SDL_SCANCODE_DOWN] && !keyboardState[SDL_SCANCODE_S]) {
 				keys[DOWN] = false;
 			}
-			if (!keyboardState[SDL_SCANCODE_LEFT]) {
+			if (!keyboardState[SDL_SCANCODE_LEFT] && !keyboardState[SDL_SCANCODE_A]) {
 				keys[LEFT] = false;
 			}
-			if (!keyboardState[SDL_SCANCODE_RIGHT]) {
+			if (!keyboardState[SDL_SCANCODE_RIGHT] && !keyboardState[SDL_SCANCODE_D]) {
 				keys[RIGHT] = false;
 			}
 			if (!keyboardState[SDL_SCANCODE_ESCAPE]) {
