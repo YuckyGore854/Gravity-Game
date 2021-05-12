@@ -21,7 +21,7 @@ void player::draw(SDL_Renderer* renderer) {
 		SDL_RenderCopyExF(renderer, sprites, &frameRect, &entRect, NULL, NULL, flip);//flips the image if the player is facing left
 
 	ticker++;//ups the ticker
-	if (ticker > 6) {//once 6 frames have passed
+	if (ticker > 10) {//once 6 frames have passed
 		ticker = 0;//resets ticker
 		frameCounter++;//adds to the frame position
 		frameRect.x = frameCounter * 100;//updates the rectangle that holds what we draw
