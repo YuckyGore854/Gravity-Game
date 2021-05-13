@@ -1,4 +1,5 @@
 #include "background.h"
+#include<math.h>
 
 background::background(int x, int y, int w, int h) {
 	entRect.x = x;
@@ -13,16 +14,20 @@ background::background(int x, int y, int w, int h) {
 
 
 
-void background::draw(SDL_Renderer* renderer, float offSet) {
-	float currOffset = offSet;
-
-	if (offSet < 640) {
+void background::draw(SDL_Renderer* renderer, float movement) {
+	if (movement > totalMovement || movement < totalMovement)
+		currOffset -= movement - totalMovement;
+	if (currOffset < -640)
 		currOffset = 0;
-	}
-	else {
-		entRect.x = currOffset;
-		entRect2.x = currOffset + 640;
-	}
+
+	
+
+	totalMovement = movement;
+
+	entRect.x = currOffset;
+	entRect2.x = currOffset + 640;
+	
+	
 
 	SDL_RenderCopyF(renderer, sprites, NULL, &entRect);
 	SDL_RenderCopyF(renderer, sprites, NULL, &entRect2);

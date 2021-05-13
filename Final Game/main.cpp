@@ -50,7 +50,6 @@ int main(int argc, char* args[]) {
 	menuRect.y = 200;
 	menuRect.w = 40;
 	menuRect.h = 20;
-	float scrollingOffset = 0;
 
 	int fps = 60;//these variables are for manually capping the framerate
 	int frameDelay = 1000 / fps;//this is the frameDelay variable, or approximately how long each frame should take
@@ -113,10 +112,9 @@ int main(int argc, char* args[]) {
 					SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 					SDL_RenderClear(renderer);
 
-					if(player.getX() > 200)
-						scrollingOffset = -player.getX();
 					
-					backGround.draw(renderer, scrollingOffset);
+					backGround.draw(renderer, player.getX());
+					
 					player.draw(renderer);
 					gameMap.draw(renderer);
 					
