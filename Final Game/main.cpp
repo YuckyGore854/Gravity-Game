@@ -90,7 +90,6 @@ int main(int argc, char* args[]) {
 				switch (currGameState) {//gamestates are in an enumerated switch statement
 				case mainMenu:
 
-
 					if (startButton.isPressed(mousePos[0], mousePos[1], mouseButtons[0]))//uses the button to switch the gamestate
 						currGameState = playing;
 
